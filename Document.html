@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<!-- saved from url=(0043)https://sb.koding.school/projects/2pdszdk8/ -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script id="page-manipulator-event-target-creator" src="chrome-extension://mdhellggnoabbnnchkeniomkpghbekko/receiver.js"></script><span id="page-manipulator-event-target"></span></head><body style="margin:0px;"><textarea id="mainCode" style="display: none;"></textarea><textarea id="pluginCode" style="display: none;">socket = {
+    on: DB.onMessage.bind(DB),
+    emit:DB.broadcast.bind(DB)
+}
+
+var name = prompt('輸入你的名稱 ?') || '匿名';
+var text = '加入聊天室';
+var time = new Date();
+time = time.toLocaleTimeString();
+var r = Math.random()*255;
+var g = Math.random()*255;
+var b = Math.random()*255;
+var color = `rgb(${r}, ${g}, ${b})`;
+
+appendComment(text, name, time, color);
+
+$('#input').keypress(keypress);
+
+socket.on('message', onMessage); // 監聽訊息
+socket.emit('message', [text, name, time, color]); // 廣播訊息
+
+// 將訊息資料新增到畫面上
+function appendComment (text, name, time, color) {
+    var html = `
+        &lt;p style="color: ${color};"&gt;
+            【${name} ${time}】${text}
+        &lt;/p&gt;
+    `
+    $('#chatbox').append(html); 
+    $("#chatbox").scrollTop($("#chatbox")[0].scrollHeight);
+}
+
+// 當輸入框按下 enter 按鍵時，廣播訊息給其他在線使用者
+function keypress(e) {
+    var text = $('input').val();
+    var time = new Date();
+    time = time.toLocaleTimeString();
+    
+    if (e.keyCode == 13 &amp;&amp; text != '') {
+        appendComment(text, name, time, color);
+        $('input').val('');
+        socket.emit('message', [text, name, time, color]);
+    }
+}
+
+// 當接收到訊息資料時，將資料新增到介面上
+function onMessage(data) {
+    appendComment(data[0], data[1], data[2], data[3]);
+}</textarea><script>var TOKEN = "1rxugg0o293tq2z6qipt5qh2ikyyd0w0",
+    PROJECT_ID = '2pdszdk8',
+    USER_ID = 42241,
+    USER_NAME = "Lucas1105",
+    ENV = "production";</script><script src="./Document_files/web-4fa3da104884edad3f7f7ddd7b1122410a9696aaf9ee31e7dca621d3cd03de79.js.下載"></script><style>body { background-color: #fff; }</style>
+
+
+	<title>Document</title>
+	<script src="./Document_files/jquery-3.4.1.min.js.下載"></script>
+
+
+    <div id="chatbox">
+        <p style="color: rgb(255, 255, 255);">
+            【小明 下午1:00:00】加入聊天室
+        </p>
+        <p style="color: rgb(255, 255, 255);">
+            【大偉 下午1:00:00】加入聊天室
+        </p>
+        <p style="color: rgb(255, 255, 255);">
+            【凱文 下午1:00:00】加入聊天室
+        </p>
+    
+        <p style="color: rgb(184.03849461259438, 152.99130643368747, 213.53756619390956);">
+            【haund 下午5:52:20】加入聊天室
+        </p>
+    
+        <p style="color: rgb(184.03849461259438, 152.99130643368747, 213.53756619390956);">
+            【haund 下午5:52:26】alohA
+        </p>
+    </div>
+    <input id="input" type="text" placeholder="說些什麼...">
+
+<style>body {
+    padding: 30px;
+    background-color: #222222;
+    font-family: Monospace;
+}
+
+#chatbox {
+    height: 400px;
+    padding: 5px;
+    border: 1px solid #bbbbbb;
+    overflow-y: scroll;
+}
+
+#chatbox > p {
+    margin: 0;
+    color: #bbbbbb;
+    font-size: 1rem;
+}
+
+input {
+    width: 100%;
+    padding: 10px 10px;
+    border: 1px solid #bbbbbb;
+    border-top-width: 0;
+    box-sizing: border-box;
+    color: #bbbbbb;
+    background-color: #222222;
+    outline: none;
+    font-family: Monospace;
+    font-size: 1rem;
+}</style><script>function htmlDecode(input){
+  var doc = new DOMParser().parseFromString(input, "text/html");
+  return doc.documentElement.textContent;
+}
+
+DB.ready(function() {
+  var pluginCode = htmlDecode(document.getElementById('pluginCode').innerHTML);
+  var mainCode = htmlDecode(document.getElementById('mainCode').innerHTML);
+  eval.call(window, pluginCode);
+  eval.call(window, mainCode);
+});</script></body></html>
